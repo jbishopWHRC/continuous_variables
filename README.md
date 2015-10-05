@@ -1,4 +1,4 @@
-### Continuous Variables
+# Continuous Variables
 A python tool for evaluating the accuracy of maps of continuous variables.
 
 ## Dependencies
@@ -6,13 +6,21 @@ This script requires the following python libraries. These can all be installed
 with "pip" or your favorite python package manager.
 
 matplotlib.pyplot
+
 numpy
+
 osgeo
+
 pandas
+
 rasterstats
+
 scipy.stats
+
 sklearn.metrics
+
 statsmodels.api
+
 
 ## Version 1.0
 This is a standalone python script that implements some of the measures described
