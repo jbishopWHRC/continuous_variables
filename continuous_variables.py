@@ -1,5 +1,5 @@
 # Import the necessary modules
-import sys
+import argparse, sys
 import pandas as 
 import matplotlib.pyplot as plt
 import numpy as np
@@ -77,7 +77,7 @@ def scatterplot_gmfr(shapefile_value, raster_value, output_directory):
     plt.plot([0, maxvalue], [0, maxvalue], color='k', linestyle='-', linewidth=1)
     plt.legend(loc='lower right', shadow=True)
     pdffile = '{0}/scatterplot_gmfr_plot.pdf'.format(output_directory)
-    print "Plotting scatterplot and GMFR Regression. Output saved to {0}.".format(pdffile)
+    print 'Plotting scatterplot and GMFR Regression. Output saved to {0}.'.format(pdffile)
     plt.savefig(pdffile)
     return b, m
 
@@ -116,10 +116,15 @@ def t_test(shapefile_value, raster_value):
 if __name__ == '__main__':
     # raster_filename = 'carbon_per_pixel_orig_rasters_model_73001_55001.tif'
     # shapefile_filename = 'biomass_plots_subset_carbon_sum_polygon.shp'
-    raster_filename = sys.argv[1]
-    shapefile_filename = sys.argv[2]
-    geometry_type = sys.argv[3]
-    shapefile_column = sys.argv[4]
-    output_directory = sys.argv[5]
-    shapefile_value, raster_value = get_values(raster_filename, shapefile_filename, geometry_type)
+    # Get the arguments to the script.
+    p = argparse.ArgumentParser(prog="continuous_variables.py", description="A program that assesses continuous geospatial datasets.")
+    p.add_argument('-s', '--shapefile', dest='shapefile_filename', required=True, help='The full path to the shapefile containing the reference data.')
+    p.add_argument('-r', '--raster', dest='raster_filename', required=True, help='The full path to the raster to be evaluated.')
+    p.add_argument('-o', '--output_directory', dest='output_directory', required=True, help='The full path to the output directory where the plot output will be created.')
+    p.add_argument('-g', '--geometry_type', dest='geometry_type', required=True, help='The geometry type of the input shapefile.', choices=['Point', 'Polygon'])
+    p.add_argument('-c', '--column', dest='shapefile_column', required=True, help='The column of the shapefile containing the reference variable.')
+    args = p.parse_args()
+
+    # Read the data
+    shapefile_value, raster_value = get_values(args.raster_filename, args.shapefile_filename, args.geometry_type)
 
