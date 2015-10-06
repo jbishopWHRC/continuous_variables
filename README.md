@@ -42,3 +42,8 @@ optional arguments:
                         variable.
 ```
 
+## Changelog
+*Added argparse module to handle help argument passing
+*Added support for point shapefiles
+*PDF output from plotting functions
+*More detailed code comments
