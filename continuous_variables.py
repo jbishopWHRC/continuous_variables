@@ -135,10 +135,10 @@ if __name__ == '__main__':
     shapefile_value, raster_value = get_values(args.shapefile_filename, args.raster_filename, args.geometry_type, args.shapefile_column)
 
     # Run the statistics
-    ecdf(args.shapefile_value, args.raster_value, args.output_directory)
-    ks(args.shapefile_value, args.raster_value)
-    b, m = scatterplot_gmfr(args.shapefile_value, args.raster_value, args.output_directory)
-    agreement_coefficients(args.shapefile_value, args.raster_value, b, m)
-    rmse(args.shapefile_value, args.raster_value)
-    r2(args.shapefile_value, args.raster_value)
-    t_test(args.shapefile_value, args.raster_value)
+    ecdf(shapefile_value, raster_value, args.output_directory)
+    ks(shapefile_value, raster_value)
+    b, m = scatterplot_gmfr(shapefile_value, raster_value, args.output_directory)
+    agreement_coefficients(shapefile_value, raster_value, b, m)
+    rmse(shapefile_value, raster_value)
+    r2(shapefile_value, raster_value)
+    t_test(shapefile_value, raster_value)
