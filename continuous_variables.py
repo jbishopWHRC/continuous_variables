@@ -126,5 +126,13 @@ if __name__ == '__main__':
     args = p.parse_args()
 
     # Read the data
-    shapefile_value, raster_value = get_values(args.raster_filename, args.shapefile_filename, args.geometry_type)
+    shapefile_value, raster_value = get_values(args.shapefile_filename, args.raster_filename, args.geometry_type)
 
+    # Run the statistics
+    ecdf(args.shapefile_filename, args.raster_filename, args.output_directory)
+    ks(args.shapefile_filename, args.raster_filename)
+    b, m = scatterplot_gmfr(args.shapefile_filename, args.raster_filename, args.output_directory)
+    agreement_coefficients(args.shapefile_filename, args.raster_filename, b, m)
+    rmse(args.shapefile_filename, args.raster_filename)
+    r2(args.shapefile_filename, args.raster_filename)
+    t_test(args.shapefile_filename, args.raster_filename)
