@@ -63,6 +63,7 @@ def ecdf(shapefile_value, raster_value, output_directory):
     pdffile = '{0}/ecdf_plot.pdf'.format(output_directory)
     print "Plotting ECDF. Output saved to {0}.".format(pdffile)
     plt.savefig(pdffile)
+    plt.close()
 
 def ks(shapefile_value, raster_value):
     '''Compute the Kolmogorov-Smirnov (KS) statistic'''
@@ -80,11 +81,12 @@ def scatterplot_gmfr(shapefile_value, raster_value, output_directory):
     axes.set_xlim([0,maxvalue])
     axes.set_ylim([0,maxvalue])
     plt.plot([0, maxvalue], [m * 0 + b, m * maxvalue + b], color='r', label="GMFR")
-    plt.plot([0, maxvalue], [0, maxvalue], color='k', linestyle='-', linewidth=1)
+    plt.plot([0, maxvalue], [0, maxvalue], color='k', linestyle='-', linewidth=1, label="1:1 line")
     plt.legend(loc='lower right', shadow=True)
     pdffile = '{0}/scatterplot_gmfr_plot.pdf'.format(output_directory)
     print 'Plotting scatterplot and GMFR Regression. Output saved to {0}.'.format(pdffile)
     plt.savefig(pdffile)
+    plt.close()
     return b, m
 
 def agreement_coefficients(shapefile_value, raster_value, b, m):
