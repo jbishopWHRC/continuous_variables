@@ -67,7 +67,7 @@ def ecdf(shapefile_value, raster_value, output_directory):
 def ks(shapefile_value, raster_value):
     '''Compute the Kolmogorov-Smirnov (KS) statistic'''
     ks, pvalue = ks_2samp(raster_value, shapefile_value)
-    print "Kolmogorov-Smirnov statistic is: {0}. P-value is {1}.".format(ks, pvalue)
+    print "Kolmogorov-Smirnov statistic is: {0}. The p-value is {1}.".format(ks, pvalue)
     return ks, pvalue
 
 def scatterplot_gmfr(shapefile_value, raster_value, output_directory):
@@ -116,7 +116,7 @@ def r2(shapefile_value, raster_value):
 def t_test(shapefile_value, raster_value):
     '''Compute the difference between the means (t-test)'''
     t, p = ttest_rel(shapefile_value, raster_value)
-    print "The t-statistic is {0}. The pvalue is {1}.".format(t, p)
+    print "The t-statistic is {0}. The p-value is {1}.".format(t, p)
     return t, p
 
 if __name__ == '__main__':
