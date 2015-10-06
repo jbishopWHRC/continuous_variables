@@ -51,14 +51,17 @@ def get_values(shapefile_filename, raster_filename, geometry_type, shapefile_col
 
 def ecdf(shapefile_value, raster_value, output_directory):
     '''Build and plot an Empirical Cumulative Distribution Function'''
+    # Build the plot ECDF
     ecdf_shape = sm.distributions.ECDF(shapefile_value)
     x_shape = np.linspace(min(shapefile_value), max(shapefile_value))
     y_shape = ecdf_shape(x_shape)
     plt.plot(x_shape, y_shape, label="Plots")
+    # Build the raster ECDF
     ecdf_raster = sm.distributions.ECDF(raster_value)
     x_raster = np.linspace(min(raster_value), max(raster_value))
     y_raster = ecdf_raster(x_raster)
     plt.plot(x_raster, y_raster, label="Raster")
+    # Build and save the plot
     plt.legend(loc='lower right', shadow=True)
     pdffile = '{0}/ecdf_plot.pdf'.format(output_directory)
     print "Plotting ECDF. Output saved to {0}.".format(pdffile)
@@ -73,8 +76,11 @@ def ks(shapefile_value, raster_value):
 
 def scatterplot_gmfr(shapefile_value, raster_value, output_directory):
     '''Compute the Geometric Mean Functional Relationship Regression and plot it with a scatterplot'''
+    # Compute the slope of the least squares bisector (from least sqares minimizing y and least squares minimizing x)
     m = np.tan((np.arctan((len(shapefile_value) * np.sum(shapefile_value * raster_value) - np.sum(shapefile_value) * np.sum(raster_value)) / (len(shapefile_value) * np.sum(shapefile_value ** 2) - np.sum(shapefile_value) ** 2)) + np.arctan(1 / ( (len(shapefile_value) * np.sum(shapefile_value * raster_value) - np.sum(raster_value) * np.sum(shapefile_value)) / (len(shapefile_value) * np.sum(raster_value ** 2) - np.sum(raster_value) ** 2)))) / 2)
+    # Compute the intercept
     b = np.mean(raster_value) - m * np.mean(shapefile_value)
+    # Create and save the plot
     maxvalue = max(max(raster_value), max(shapefile_value)) + 10
     plt.scatter(shapefile_value, raster_value)
     axes = plt.gca()
@@ -91,14 +97,22 @@ def scatterplot_gmfr(shapefile_value, raster_value, output_directory):
 
 def agreement_coefficients(shapefile_value, raster_value, b, m):
     '''Compute Agreement Coefficient (AC), Systematic AC (ACsys), and Unsystematic AC (ACuns)'''
+    # Sum of Square Difference
     ssd = np.sum((shapefile_value - raster_value) ** 2)
+    # Sum of Potential Difference
     spod = np.sum((abs(np.mean(shapefile_value) - np.mean(raster_value)) + abs(shapefile_value - np.mean(shapefile_value))) * (abs(np.mean(shapefile_value) - np.mean(raster_value)) + abs(raster_value - np.mean(raster_value))))
+    # Agreement Coefficient
     ac = ssd / spod
+    # Computed from the GMFR Regression
     y_hat = m * shapefile_value + b
     x_hat = (raster_value - b) / m
+    # Unsystematic Sum of Product Difference
     spd_u = np.sum((abs(shapefile_value - x_hat)) * (abs(raster_value - y_hat)))
+    # Systematic Sum of Product Difference
     spd_s = ssd - spd_u
+    # Systematic Agreement Coefficient 
     ac_sys = 1 - (spd_s / spod)
+    # Unsystematic Agreement Coefficient
     ac_uns = 1 - (spd_u / spod)
     print "Agreement Coefficient is {0}. Systematic Agreement Coefficient is {1}. Unsystematic Agreement Coefficient is {2}.".format(ac, ac_sys, ac_uns)
     return ac, ac_sys, ac_uns
