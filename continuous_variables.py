@@ -54,13 +54,14 @@ def ecdf(shapefile_value, raster_value, output_directory):
     y_raster = ecdf_raster(x_raster)
     plt.plot(x_raster, y_raster, label="Raster")
     plt.legend(loc='lower right', shadow=True)
-    #plt.show()
     pdffile = '{0}/ecdf_plot.pdf'.format(output_directory)
+    print "Plotting ECDF. Output saved to {0}.".format(pdffile)
     plt.savefig(pdffile)
 
 def ks(shapefile_value, raster_value):
     '''Compute the Kolmogorov-Smirnov (KS) statistic'''
     ks, pvalue = ks_2samp(raster_value, shapefile_value)
+    print "Kolmogorov-Smirnov statistic is: {0}. P-value is {1}.".format(ks, pvalue)
     return ks, pvalue
 
 def scatterplot_gmfr(shapefile_value, raster_value, output_directory):
@@ -76,6 +77,7 @@ def scatterplot_gmfr(shapefile_value, raster_value, output_directory):
     plt.plot([0, maxvalue], [0, maxvalue], color='k', linestyle='-', linewidth=1)
     plt.legend(loc='lower right', shadow=True)
     pdffile = '{0}/scatterplot_gmfr_plot.pdf'.format(output_directory)
+    print "Plotting scatterplot and GMFR Regression. Output saved to {0}.".format(pdffile)
     plt.savefig(pdffile)
     return b, m
 
@@ -90,21 +92,25 @@ def agreement_coefficients(shapefile_value, raster_value, b, m):
     spd_s = ssd - spd_u
     ac_sys = 1 - (spd_s / spod)
     ac_uns = 1 - (spd_u / spod)
+    print "Agreement Coefficient is {0}. Systematic Agreement Coefficient is {1}. Unsystematic Agreement Coefficient is {2}.".format(ac, ac_sys, ac_uns)
     return ac, ac_sys, ac_uns
 
 def rmse(shapefile_value, raster_value):
     '''Calculate the Root Mean Square Error'''
     rmse = np.sqrt(np.mean((raster_value - shapefile_value) ** 2))
+    print "RMSE is {0}".format(rmse)
     return rmse
 
 def r2(shapefile_value, raster_value):
     '''Calculate the coefficient of determination (r2)'''
     r2 = r2_score(shapefile_value, raster_value)
+    print "Coefficient of Determination is {0}".format(r2)
     return r2
 
 def t_test(shapefile_value, raster_value):
     '''Compute the difference between the means (t-test)'''
     t, p = ttest_rel(shapefile_value, raster_value)
+    print "The t-statistic is {0}. The pvalue is {1}.".format(t, p)
     return t, p
 
 if __name__ == '__main__':
