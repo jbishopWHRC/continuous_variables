@@ -10,7 +10,7 @@ from scipy.stats import ks_2samp, ttest_rel
 from sklearn.metrics import r2_score
 
 
-def get_values(shapefile_filename, raster_filename, geometry_type):
+def get_values(shapefile_filename, raster_filename, geometry_type, shapefile_column):
     '''Extract the values from the shapefile and raster'''
     if geometry_type == "Polygon":
         # Use zonal statistics to get the mean value from the raster under the polygon
@@ -132,13 +132,13 @@ if __name__ == '__main__':
     args = p.parse_args()
 
     # Read the data
-    shapefile_value, raster_value = get_values(args.shapefile_filename, args.raster_filename, args.geometry_type)
+    shapefile_value, raster_value = get_values(args.shapefile_filename, args.raster_filename, args.geometry_type, args.shapefile_column)
 
     # Run the statistics
-    ecdf(args.shapefile_filename, args.raster_filename, args.output_directory)
-    ks(args.shapefile_filename, args.raster_filename)
-    b, m = scatterplot_gmfr(args.shapefile_filename, args.raster_filename, args.output_directory)
-    agreement_coefficients(args.shapefile_filename, args.raster_filename, b, m)
-    rmse(args.shapefile_filename, args.raster_filename)
-    r2(args.shapefile_filename, args.raster_filename)
-    t_test(args.shapefile_filename, args.raster_filename)
+    ecdf(args.shapefile_value, args.raster_value, args.output_directory)
+    ks(args.shapefile_value, args.raster_value)
+    b, m = scatterplot_gmfr(args.shapefile_value, args.raster_value, args.output_directory)
+    agreement_coefficients(args.shapefile_value, args.raster_value, b, m)
+    rmse(args.shapefile_value, args.raster_value)
+    r2(args.shapefile_value, args.raster_value)
+    t_test(args.shapefile_value, args.raster_value)
