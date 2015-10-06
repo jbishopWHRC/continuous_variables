@@ -18,7 +18,7 @@ statsmodels.api
 This is a standalone python script that implements some of the measures described
 in R. Riemann et al. / Remote Sensing of Environment 114 (2010) 2337–2352.
 
-`usage: continuous_variables.py [-h] -s SHAPEFILE_FILENAME -r RASTER_FILENAME
+```usage: continuous_variables.py [-h] -s SHAPEFILE_FILENAME -r RASTER_FILENAME
                                -o OUTPUT_DIRECTORY -g {Point,Polygon} -c
                                SHAPEFILE_COLUMN  
 
@@ -38,5 +38,5 @@ optional arguments:
                         The geometry type of the input shapefile.
   -c SHAPEFILE_COLUMN, --column SHAPEFILE_COLUMN
                         The column of the shapefile containing the reference
-                        variable.`
+                        variable.```
 
