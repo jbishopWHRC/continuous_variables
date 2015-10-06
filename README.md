@@ -38,7 +38,7 @@ optional arguments:
   -g {Point,Polygon}, --geometry_type {Point,Polygon}
                         The geometry type of the input shapefile.
   -c SHAPEFILE_COLUMN, --column SHAPEFILE_COLUMN
-                        The column of the shapefile containing the reference
+                        The column name of the shapefile containing the reference
                         variable.
 ```
 

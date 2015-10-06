@@ -144,7 +144,7 @@ if __name__ == '__main__':
     p.add_argument('-r', '--raster', dest='raster_filename', required=True, help='The full path to the raster to be evaluated.')
     p.add_argument('-o', '--output_directory', dest='output_directory', required=True, help='The full path to the output directory where the plot output will be created.')
     p.add_argument('-g', '--geometry_type', dest='geometry_type', required=True, help='The geometry type of the input shapefile.', choices=['Point', 'Polygon'])
-    p.add_argument('-c', '--column', dest='shapefile_column', required=True, help='The column of the shapefile containing the reference variable.')
+    p.add_argument('-c', '--column', dest='shapefile_column', required=True, help='The name of the column in the shapefile containing the reference variable.')
     args = p.parse_args()
 
     # Read the data
