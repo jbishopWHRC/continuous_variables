@@ -13,35 +13,41 @@ from sklearn.metrics import r2_score
 def get_values(shapefile_filename, raster_filename, geometry_type):
     '''Extract the values from the shapefile and raster'''
     if geometry_type == "Polygon":
-        # If polygon, do this:
+        # Use zonal statistics to get the mean value from the raster under the polygon
         stats = zonal_stats(shapefile_filename, raster_filename, geojson_out=True)
+        # Extract the shapefile and raster values from the JSON object and convert to a pandas series
         shapefile_value = pd.Series([x['properties'][shapefile_column] for x in stats])
         raster_value = pd.Series([x['properties']['mean'] for x in stats])
         return shapefile_value, raster_value
     else:
-        # Otherwise, do this
-        # Open the raster
-        return ("I can't", "do this yet")
+        # Extract the raster values under the input points
+        # Open the raster, get the geotransform, and the band
         raster_handle = gdal.Open(raster_filename) 
         geo_transform = raster_handle.GetGeoTransform()
         raster_band = raster_handle.GetRasterBand(1)
 
-        # Open the shapefile
+        # Open the shapefile and get the layer
         shapefile_handle = ogr.Open(shapefile_filename)
         layer = shapefile_handle.GetLayer()
 
+        # Empty lists to hold the shapefile and raster values
+        sv = []
+        rv = []
         # Extract the raster value for each feature in the shapefile
         for feature in layer:
-            shapefile_value = feature.GetField(shapefile_column)
+            # Store the shapefile value
+            sv.append(feature.GetField(shapefile_column))
+            # Get the geometry and coordinates of the feature
             geom = feature.GetGeometryRef()
-            mx, my = geom.Centroid().GetX(), geom.Centroid().GetY()  #coord in map units
+            mx, my = geom.Centroid().GetX(), geom.Centroid().GetY()
             #Convert from map to pixel coordinates.
             #Only works for geotransforms with no rotation.
             #If raster is rotated, see http://code.google.com/p/metageta/source/browse/trunk/metageta/geometry.py#493
             pixel_x = int((mx - geo_transform[0]) / geo_transform[1]) #x pixel
             pixel_y = int((my - geo_transform[3]) / geo_transform[5]) #y pixel
-            raster_value = raster_band.ReadAsArray(pixel_x,pixel_y,1,1)
-            print raster_value[0], shapefile_value
+            # Extract and store the raster value 
+            rv.append(raster_band.ReadAsArray(pixel_x,pixel_y,1,1))
+        return pd.Series(sv), pd.Series(rv)
 
 def ecdf(shapefile_value, raster_value, output_directory):
     '''Build and plot an Empirical Cumulative Distribution Function'''
