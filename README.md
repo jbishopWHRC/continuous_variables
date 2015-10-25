@@ -17,7 +17,7 @@ statsmodels.api (from statsmodels)
 
 On Linux/OSX, this should work to get the packages installed.
 ```bash
-sudo pip install matplotlib numpy osgeo pandas patsy rasterstates scipy sklearn statsmodels
+sudo pip install matplotlib numpy osgeo pandas patsy rasterstats scipy sklearn statsmodels
 ```
 
 ## Version 2.0
