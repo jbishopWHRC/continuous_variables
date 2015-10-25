@@ -28,9 +28,10 @@ to include graph titles, labels, legends, etc that are specific to their dataset
 This script DOES NOT provide any GIS preprocessing. It is expected that the user 
 will have prepared an appropriate raster file and shapefile that properly overlay 
 and have the same projection. If your plot data are represented by points, you 
-should consider buffering those points to represent your actual plot area and using
-the polygon option for a more appropriate comparison. It is assumed that the user
-understands the Briemann et al. methodology. This script presents the results of 
+should consider buffering those points to represent your actual plot area prior 
+to using this tool. Then, you should run this tool with the geometry set to the
+polygon option for a more appropriate comparison. It is assumed that the user
+understands the Riemann et al. methodology. This script presents the results of 
 the calculations and provides no interpretation of those results.
 
 ```
