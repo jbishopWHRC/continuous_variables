@@ -9,10 +9,16 @@ matplotlib.pyplot
 numpy  
 osgeo  
 pandas  
+patsy
 rasterstats  
 scipy.stats  
-sklearn.metrics  
-statsmodels.api  
+sklearn.metrics (from sklearn)
+statsmodels.api (from statsmodels)
+
+On Linux/OSX, this should work to get the packages installed.
+```bash
+sudo pip install matplotlib numpy osgeo pandas patsy rasterstates scipy sklearn statsmodels
+```
 
 ## Version 2.0
 This is a standalone python script that implements some of the measures described
@@ -38,7 +44,7 @@ optional arguments:
   -g {Point,Polygon}, --geometry_type {Point,Polygon}
                         The geometry type of the input shapefile.
   -c SHAPEFILE_COLUMN, --column SHAPEFILE_COLUMN
-                        The column name of the shapefile containing the reference
+                        The name of the column in the shapefile containing the reference
                         variable.
 ```
 
