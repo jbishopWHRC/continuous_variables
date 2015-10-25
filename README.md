@@ -22,7 +22,16 @@ sudo pip install matplotlib numpy osgeo pandas patsy rasterstats scipy sklearn s
 
 ## Version 2.0
 This is a standalone python script that implements some of the measures described
-in R. Riemann et al. / Remote Sensing of Environment 114 (2010) 2337–2352.
+in R. Riemann et al. / Remote Sensing of Environment 114 (2010) 2337–2352. This is 
+a generic implementation and this script can be further customized by the end user
+to include graph titles, labels, legends, etc that are specific to their dataset.
+This script DOES NOT provide any GIS preprocessing. It is expected that the user 
+will have prepared an appropriate raster file and shapefile that properly overlay 
+and have the same projection. If your plot data are represented by points, you 
+should consider buffering those points to represent your actual plot area and using
+the polygon option for a more appropriate comparison. It is assumed that the user
+understands the Briemann et al. methodology. This script presents the results of 
+the calculations and provides no interpretation of those results.
 
 ```
 usage: continuous_variables.py [-h] -s SHAPEFILE_FILENAME -r RASTER_FILENAME
